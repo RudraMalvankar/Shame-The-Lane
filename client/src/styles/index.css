@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --rage: #ef4444;
+    --rage-glow: rgba(239, 68, 68, 0.3);
+    --civic: #3b82f6;
+    --bg-void: #050508;
+    --bg-deep: #0a0a0f;
+    --bg-surface: #0f0f17;
+    --bg-card: #13131e;
+    --bg-card-hover: #1a1a28;
+    --border: #1e1e2e;
+    --border-light: #2a2a3e;
+    --text-primary: #f0f0ff;
+    --text-secondary: #8888aa;
+    --text-muted: #555570;
+  }
+
+  * { @apply box-border; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    @apply antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a5e; }
+}
+
+@layer components {
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn-rage {
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg
+           transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed
+           bg-red-600 hover:bg-red-500 text-white px-5 py-2.5 text-sm;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
+  }
+  .btn-rage:hover { box-shadow: 0 0 28px rgba(239, 68, 68, 0.4); }
+
+  .btn-civic {
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg
+           transition-all duration-200 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 text-sm;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg
+           transition-all duration-200 border hover:border-[#3a3a5e]
+           text-[#8888aa] hover:text-white px-5 py-2.5 text-sm bg-transparent;
+    border-color: var(--border-light);
+  }
+
+  .btn-outline-rage {
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg
+           transition-all duration-200 border border-red-600/40 hover:border-red-500
+           text-red-400 hover:text-red-300 hover:bg-red-600/10 px-5 py-2.5 text-sm;
+  }
+
+  /* ── Cards ───────────────────────────────────────── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    @apply rounded-xl;
+  }
+  .card-hover {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    @apply rounded-xl transition-all duration-200;
+  }
+  .card-hover:hover { background: var(--bg-card-hover); border-color: var(--border-light); }
+
+  /* ── Inputs ──────────────────────────────────────── */
+  .input {
+    background: #0a0a12;
+    border: 1px solid var(--border-light);
+    @apply w-full rounded-lg px-4 py-3 text-sm text-white placeholder-[#555570]
+           focus:outline-none transition-all duration-200;
+  }
+  .input:focus {
+    background: #0d0d18;
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+  }
+
+  /* ── Glow ────────────────────────────────────────── */
+  .glow-rage { box-shadow: 0 0 30px rgba(239,68,68,0.15), 0 0 60px rgba(239,68,68,0.05); }
+  .glow-rage-strong { box-shadow: 0 0 40px rgba(239,68,68,0.35), 0 0 80px rgba(239,68,68,0.15); }
+  .glow-civic { box-shadow: 0 0 30px rgba(59,130,246,0.2); }
+
+  /* ── Pressure Bar ────────────────────────────────── */
+  .pressure-bar-track { @apply w-full h-1.5 rounded-full; background: var(--border); }
+  .pressure-bar-fill {
+    @apply h-full rounded-full transition-all duration-700;
+    background: linear-gradient(90deg, #f97316, #ef4444);
+    box-shadow: 0 0 8px rgba(239,68,68,0.5);
+  }
+
+  /* ── Status Badges ───────────────────────────────── */
+  .badge-critical {
+    @apply text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md;
+    background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25);
+  }
+  .badge-escalated {
+    @apply text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md;
+    background: rgba(249,115,22,0.12); color: #f97316; border: 1px solid rgba(249,115,22,0.25);
+  }
+  .badge-watchlist {
+    @apply text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md;
+    background: rgba(234,179,8,0.12); color: #eab308; border: 1px solid rgba(234,179,8,0.25);
+  }
+  .badge-resolved {
+    @apply text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md;
+    background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25);
+  }
+  .badge-pending {
+    @apply text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md;
+    background: rgba(99,102,241,0.12); color: #818cf8; border: 1px solid rgba(99,102,241,0.25);
+  }
+  .badge-rejected {
+    @apply text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md;
+    background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25);
+  }
+
+  /* ── Category Pills ──────────────────────────────── */
+  .pill {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full
+           border transition-all duration-150 cursor-pointer select-none;
+    background: var(--bg-surface);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+  }
+  .pill:hover { border-color: #3a3a5e; color: var(--text-primary); }
+  .pill.active {
+    background: rgba(239,68,68,0.12);
+    border-color: rgba(239,68,68,0.4);
+    color: #ef4444;
+  }
+
+  /* ── Section Label ───────────────────────────────── */
+  .section-label { @apply text-[10px] font-bold uppercase tracking-widest; color: var(--text-muted); }
+
+  /* ── Divider ─────────────────────────────────────── */
+  .divider { @apply w-full h-px; background: var(--border); }
+}
+
+/* ── Leaflet dark overrides ──────────────────────────── */
+.leaflet-container { background: #050508 !important; font-family: 'Inter', sans-serif !important; }
+.leaflet-popup-content-wrapper {
+  background: #13131e !important; color: #f0f0ff !important;
+  border: 1px solid #1e1e2e !important; border-radius: 12px !important;
+  box-shadow: 0 0 40px rgba(0,0,0,0.8) !important;
+}
+.leaflet-popup-tip { background: #13131e !important; }
+.leaflet-control-zoom a { background: #13131e !important; color: #8888aa !important; border-color: #1e1e2e !important; }
+.leaflet-control-zoom a:hover { background: #1a1a28 !important; color: white !important; }
+
+/* ── Keyframes ───────────────────────────────────────── */
+@keyframes pulse-rage { 0%,100%{opacity:1} 50%{opacity:0.5} }
+@keyframes glow-pulse-anim { 0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.2)} 50%{box-shadow:0 0 40px rgba(239,68,68,0.5)} }
+@keyframes slide-up { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slide-in-right { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+
+.animate-pulse-rage { animation: pulse-rage 2s ease-in-out infinite; }
+.animate-glow-pulse { animation: glow-pulse-anim 3s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 0.4s ease forwards; }
+.animate-slide-in-right { animation: slide-in-right 0.4s ease forwards; }
+
+/* ── Gradient helpers ────────────────────────────────── */
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(239,68,68,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(59,130,246,0.04) 0%, transparent 50%),
+              #050508;
+}
+.map-gradient {
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(239,68,68,0.06) 0%, transparent 70%), #050508;
+}
