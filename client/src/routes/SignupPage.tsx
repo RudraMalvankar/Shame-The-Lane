@@ -17,7 +17,7 @@ export default function SignupPage() {
     setLoading(true);
     try {
       await signup(name, email, password);
-      navigate('/map');
+      navigate('/feed');
     } catch (err: any) {
       setError(err.message ?? 'Registration failed');
     } finally {
@@ -26,9 +26,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-full items-center justify-center px-4 py-0">
-      <div>
-        <nav
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg-void)' }}>
+      <nav
         className="flex items-center justify-between px-6 lg:px-12 py-4 sticky top-0 z-50"
         style={{ background: 'rgba(5,5,8,0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #1e1e2e' }}
       >
@@ -50,96 +49,138 @@ export default function SignupPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/login')}
-            className="text-sm font-medium transition-colors hidden sm:block"
+            className="text-sm font-medium transition-colors"
             style={{ color: 'var(--text-secondary)' }}
             onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = 'white')}
             onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--text-secondary)')}
           >
             Sign In
           </button>
-          <button
-            onClick={() => navigate('/escalate')}
-            className="text-sm font-bold px-4 py-2 rounded-lg transition-all"
-            style={{
-              background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
-              boxShadow: '0 0 20px rgba(239,68,68,0.3)',
-            }}
-          >
-            File a Complaint
-          </button>
         </div>
       </nav>
-      </div>
 
-      <div className="w-full max-w-md mx-auto py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">🚦 Join the movement</h1>
-          <p className="text-gray-400 mt-2">
-            Create an account to start shaming the lane
-          </p>
-        </div>
+      <div className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h1
+              className="text-4xl font-bold mb-3"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Join the movement
+            </h1>
+            <p className="text-base" style={{ color: 'var(--text-secondary)' }}>
+              Create an account to start holding authorities accountable
+            </p>
+          </div>
 
-        <form onSubmit={handleSubmit} className="card space-y-4">
-          {error && (
-            <div className="bg-red-900/30 border border-red-700 text-red-300 rounded-lg px-4 py-3 text-sm">
-              {error}
+          <form onSubmit={handleSubmit} className="card p-8 space-y-5">
+            {error && (
+              <div
+                className="rounded-lg px-4 py-3 text-sm font-medium animate-slide-up"
+                style={{
+                  background: 'rgba(239,68,68,0.12)',
+                  border: '1px solid rgba(239,68,68,0.3)',
+                  color: '#ef4444'
+                }}
+              >
+                {error}
+              </div>
+            )}
+
+            <div>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="input"
+                placeholder="Your name"
+                required
+              />
             </div>
-          )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="input"
-              placeholder="Your name"
-              required
-            />
-          </div>
+            <div>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
+            <div>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input"
+                placeholder="Min 6 characters"
+                minLength={6}
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input"
-              placeholder="Min 6 characters"
-              minLength={6}
-              required
-            />
-          </div>
+            <button
+              type="submit"
+              className="w-full font-bold px-6 py-3.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed text-base"
+              disabled={loading}
+              style={{
+                background: loading ? 'var(--bg-surface)' : 'linear-gradient(135deg, #ef4444, #dc2626)',
+                boxShadow: loading ? 'none' : '0 0 30px rgba(239,68,68,0.35)',
+                color: 'white'
+              }}
+              onMouseEnter={e => !loading && ((e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 45px rgba(239,68,68,0.5)')}
+              onMouseLeave={e => !loading && ((e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 30px rgba(239,68,68,0.35)')}
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating account...
+                </span>
+              ) : (
+                'Create Account'
+              )}
+            </button>
 
-          <button type="submit" className="btn-primary w-full" disabled={loading}>
-            {loading ? 'Creating account…' : 'Create Account'}
-          </button>
-
-          <p className="text-center text-sm text-gray-400">
-            Already have an account?{' '}
-            <Link to="/login" className="text-rage-500 hover:underline">
-              Sign in
-            </Link>
-          </p>
-        </form>
+            <p
+              className="text-center text-sm pt-2"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Already have an account?{' '}
+              <Link
+                to="/login"
+                className="font-semibold transition-colors"
+                style={{ color: '#ef4444' }}
+                onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = '#dc2626')}
+                onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = '#ef4444')}
+              >
+                Sign in
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

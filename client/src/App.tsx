@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
 import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
+import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './routes/LandingPage';
 import CivicFeedPage from './routes/CivicFeedPage';
 import HeatmapPage from './routes/HeatmapPage';
@@ -38,12 +39,12 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
 
-            {/* App shell routes */}
-            <Route path="/feed" element={<AppShell><CivicFeedPage /></AppShell>} />
-            <Route path="/heatmap" element={<AppShell><HeatmapPage /></AppShell>} />
-            <Route path="/escalate" element={<AppShell><EscalatePage /></AppShell>} />
-            <Route path="/issue/:id" element={<AppShell><IssueDetailPage /></AppShell>} />
-            <Route path="/authority" element={<AppShell><AuthorityDashboardPage /></AppShell>} />
+            {/* App shell routes - Protected */}
+            <Route path="/feed" element={<ProtectedRoute><AppShell><CivicFeedPage /></AppShell></ProtectedRoute>} />
+            <Route path="/heatmap" element={<ProtectedRoute><AppShell><HeatmapPage /></AppShell></ProtectedRoute>} />
+            <Route path="/escalate" element={<ProtectedRoute><AppShell><EscalatePage /></AppShell></ProtectedRoute>} />
+            <Route path="/issue/:id" element={<ProtectedRoute><AppShell><IssueDetailPage /></AppShell></ProtectedRoute>} />
+            <Route path="/authority" element={<ProtectedRoute><AppShell><AuthorityDashboardPage /></AppShell></ProtectedRoute>} />
 
             {/* Legacy redirects */}
             <Route path="/map" element={<Navigate to="/heatmap" replace />} />
